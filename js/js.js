@@ -4,34 +4,25 @@ document.addEventListener("DOMContentLoaded", function() {
     const rgbInputs = document.querySelectorAll("input[type='text']");
     const resultSpan = document.getElementById("days");
 
-    convertBtn.addEventListener("click", function() {
-        const r = parseInt(rgbInputs[0].value);
-        const g = parseInt(rgbInputs[1].value);
-        const b = parseInt(rgbInputs[2].value);
+convertBtn.addEventListener("click", function() {
+    const r = parseInt(rgbInputs[0].value);
+    const g = parseInt(rgbInputs[1].value);
+    const b = parseInt(rgbInputs[2].value);
 
-        if (isValidRGB(r) && isValidRGB(g) && isValidRGB(b)) {
-            const hex = rgbToHex(r, g, b);
-            resultSpan.textContent = hex;
-        } else {
-            resultSpan.textContent = "Invalid RGB values";
-        }
-    });
-
-    clearBtn.addEventListener("click", function() {
-        rgbInputs.forEach(input => input.value = "");
-        resultSpan.textContent = "";
-    });
-
-    function isValidRGB(value) {
-        return Number.isInteger(value) && value >= 0 && value <= 255;
+    if (isValidRGB(r) && isValidRGB(g) && isValidRGB(b)) {
+        const hex = `#${eval("r.toString(16).padStart(2, '0')")}${eval("g.toString(16).padStart(2, '0')")}${eval("b.toString(16).padStart(2, '0')")}`;
+        resultSpan.textContent = hex.toUpperCase(); // Convert to uppercase for consistency
+    } else {
+        resultSpan.textContent = "Invalid RGB values";
     }
+});
 
-    function rgbToHex(r, g, b) {
-        return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-    }
+clearBtn.addEventListener("click", function() {
+    rgbInputs.forEach(input => input.value = "");
+    resultSpan.textContent = "";
+});
 
-    function componentToHex(c) {
-        const hex = c.toString(16);
-        return hex.length == 1 ? "0" + hex : hex;
-    }
+function isValidRGB(value) {
+    return Number.isInteger(value) && value >= 0 && value <= 255;
+}
 });
